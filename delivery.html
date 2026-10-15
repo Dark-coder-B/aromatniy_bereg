@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Доставка и оплата | Ароматный берег</title>
+    <!-- Подключаем ваши стили -->
+    <link rel="stylesheet" href="styles/main.css">
+    
+    <style>
+        /* Дополнительные стили конкретно для этой страницы */
+        .delivery-section {
+            padding: 60px 0;
+        }
+
+        .delivery-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+        }
+
+        .delivery-card {
+            padding: 30px;
+            border-radius: 12px;
+            background: #fff;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
+            border-left: 5px solid #2c4f3d;
+        }
+
+        .delivery-card h3 {
+            margin-top: 0;
+            color: #333;
+        }
+
+        .payment-methods {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .method-badge {
+            padding: 10px 20px;
+            background: #f5f5f5;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            color: #555;
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- Шапка (можно вынести в отдельный файл header.html и подключать через JS или PHP, 
+    но для простоты оставим структуру похожей на ваш футер) -->
+    <header style="padding: 20px 0; border-bottom: 1px solid #ccc; margin-bottom: 40px;">
+        <div class="container" style="display: flex; justify-content: space-between; align-items: center;">
+            <a href="/" class="logo"
+                style="font-family: 'Lobster', cursive; font-size: 1.5rem; text-decoration: none; color: #333;">Ароматный берег</a>
+            <nav>
+                <ul style="list-style: none; padding: 0; margin: 0; display: flex; gap: 20px;">
+                    <li><a href="/" style="text-decoration: none; color: #333;">Каталог</a></li>
+                    <li><a href="/about.html"
+                            style="text-decoration: none; color: #2c4f3d; font-weight: bold;">О чае</a></li>
+                    <li><a href="/reviews.html" style="text-decoration: none; color: #333;">Книга отзывов</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <main>
+        <section class="delivery-section">
+            <div class="container">
+                <h1 class="section-title">Доставка и оплата</h1>
+
+                <div class="delivery-grid">
+                    <!-- Карточка 1: Доставка -->
+                    <div class="delivery-card">
+                        <h3>🚚 Доставка по России</h3>
+                        <p>Мы отправляем заказы по всей России транспортными компаниями СДЭК и Boxberry.</p>
+                        <ul style="list-style: disc; padding-left: 20px; color: #555;">
+                            <li>Срок доставки: от 2 до 7 рабочих дней.</li>
+                            <li>Стоимость: рассчитывается автоматически при оформлении.</li>
+                            <li>Бесплатная доставка при заказе от 5000 ₽.</li>
+                        </ul>
+                    </div>
+
+                    <!-- Карточка 2: Самовывоз -->
+                    <div class="delivery-card">
+                        <h3>🏪 Самовывоз в Улан-Удэ</h3>
+                        <p>Вы можете забрать заказ самостоятельно из нашего магазина.</p>
+                        <p><strong>Адрес:</strong> г. Улан-Удэ, ул. Чайная, д. 1</p>
+                        <p><strong>Режим работы:</strong> Пн-Вс, 10:00 – 20:00</p>
+                    </div>
+
+                    <!-- Карточка 3: Оплата -->
+                    <div class="delivery-card">
+                        <h3>💳 Способы оплаты</h3>
+                        <p>Выберите удобный для вас способ:</p>
+                        <div class="payment-methods">
+                            <span class="method-badge">Банковской картой онлайн</span>
+                            <span class="method-badge">Наличными при получении</span>
+                            <span class="method-badge">Перевод на карту</span>
+                        </div>
+                    </div>
+
+                    <!-- Карточка 4: Гарантия -->
+                    <div class="delivery-card">
+                        <h3>🛡️ Гарантия и возврат</h3>
+                        <p>Если вам не понравился чай, вы можете вернуть его в течение 14 дней.</p>
+                        <p>Мы гарантируем свежесть каждого листа. При повреждении посылки во время доставки — мы
+                            компенсируем стоимость.</p>
+                    </div>
+                </div>
+
+                <div
+                    style="margin-top: 50px; padding: 30px; background: #f9f9f9; border-radius: 12px; text-align: center;">
+                    <h3>Есть вопросы?</h3>
+                    <p style="margin-bottom: 20px; color: #555;">Позвоните нам или напишите в мессенджеры</p>
+                    <a href="tel:+79021603748" class="btn-primary">+7 (902) 160-37-48</a>
+                </div>
+            </div>
+        </section>
+        <div id="feedback-modal" class="modal" style="display: none;">
+                <div class="modal-content">
+                    <span class="close-btn" onclick="closeFeedbackModal()">&times;</span>
+                    <h2>Заказать консультацию</h2>
+                    <p>Вы выбрали: <strong id="selected-tea"></strong></p>
+
+                    <form id="feedback-form" onsubmit="submitFeedback(event)">
+                        <input type="text" id="name" placeholder="Ваше имя" required>
+                        <input type="tel" id="phone" placeholder="Телефон" required>
+                        <button type="submit">Отправить</button>
+                    </form>
+                </div>
+            </div>
+    </main>
+
+    <!-- Футер (копируем структуру из вашего index.html) -->
+    <footer class="site-footer">
+        <div class="footer-container">
+            <!-- CTA -->
+            <div class="footer-cta">
+                <h3>Готовы подобрать идеальный чай?</h3>
+                <button class="btn-primary" onclick="openFeedbackModal('Любой чай')">Подобрать чай</button>
+            </div>
+
+            <!-- Контакты -->
+            <div class="footer-contacts">
+                <div class="contact-item">
+                    <strong>Телефон:</strong><br>
+                    <a href="tel:+79021603748">+7 (9021603748)</a>
+                </div>
+                <div class="contact-item">
+                    <strong>Email:</strong><br>
+                    <a href="mailto:dbbzh87@mail.ru">dbbzh87@mail.ru</a>
+                </div>
+                <div class="contact-item">
+                    <strong>Адрес:</strong><br>
+                    г. Улан-Удэ, ул. Чайная, д. 1
+                </div>
+            </div>
+
+            <!-- Навигация -->
+            <nav class="footer-nav">
+                <h4>Онлайн магазин</h4>
+                <ul>
+                    <li><a href="/about.html">О чае</a></li>
+                    <li><a href="/">Каталог</a></li>
+                </ul>
+            </nav>
+
+            <!-- Соцсети и копирайт -->
+            <div class="footer-meta">
+                <div class="social-links">
+                    <a href="#">TG</a>
+                    <a href="#">VK</a>
+                    <a href="#">YT</a>
+                </div>
+                <p class="copyright">© 2026 Ароматный берег. Все права защищены.</p>
+                <p><a href="/privacy.html" class="privacy-link">Политика конфиденциальности</a></p>
+            </div>
+        </div>
+    </footer>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+    <script src="JS/feedback.js"></script>
+</body>
+
+</html>

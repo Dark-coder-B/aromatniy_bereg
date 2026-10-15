@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Книга отзывов | Ароматный берег</title>
+    <link rel="stylesheet" href="styles/main.css">
+    <style>
+        .reviews-container {
+            max-width: 800px;
+            margin: 40px auto;
+        }
+
+        .review-card {
+            background: #fff;
+            padding: 20px;
+            margin-bottom: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+            border-left: 5px solid #2c4f3d;
+        }
+
+        .review-header {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 10px;
+        }
+
+        .review-date {
+            color: #888;
+            font-size: 0.9rem;
+        }
+
+        .review-text {
+            color: #444;
+            line-height: 1.5;
+        }
+
+        .feedback-form {
+            background: #f9f9f9;
+            padding: 25px;
+            border-radius: 12px;
+            margin-bottom: 40px;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+
+        .form-group input,
+        .form-group textarea {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+
+        .btn-submit {
+            background: #2c4f3d;
+            color: white;
+            padding: 12px 24px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        .btn-submit:hover {
+            background: #1e3a2b;
+        }
+    </style>
+</head>
+
+<body>
+    <header style="padding: 20px 0; border-bottom: 1px solid #ccc; margin-bottom: 40px;">
+        <div class="container" style="display: flex; justify-content: space-between; align-items: center;">
+            <a href="/" class="logo"
+                style="font-family: 'Lobster', cursive; font-size: 1.5rem; text-decoration: none; color: #333;">Ароматный
+                берег</a>
+            <nav>
+                <ul style="list-style: none; padding: 0; margin: 0; display: flex; gap: 20px;">
+                    <li><a href="/" style="text-decoration: none; color: #333;">Каталог</a></li>
+                    <li><a href="/about.html" style="text-decoration: none; color: #2c4f3d; font-weight: bold;">О
+                            чае</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <main>
+        <div class="container reviews-container">
+            <h1>Книга отзывов</h1>
+
+            <div class="feedback-form">
+                <h3>Оставить отзыв</h3>
+                <form id="reviewForm" onsubmit="submitReview(event)">
+                    <div class="form-group">
+                        <label>Ваше имя</label>
+                        <input type="text" id="revName" placeholder="Иван Иванов" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Оценка (1-5)</label>
+                        <input type="number" id="revRate" min="1" max="5" value="5" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Текст отзыва</label>
+                        <textarea id="revText" rows="4" placeholder="Расскажите, какой чай вам понравился..."
+                            required></textarea>
+                    </div>
+                    <button type="submit" class="btn-submit">Отправить отзыв</button>
+                </form>
+            </div>
+
+            <h3>Отзывы наших гостей</h3>
+            <div id="reviewsList">
+                <div class="review-card">
+                    <div class="review-header">
+                        <strong>Анна</strong>
+                        <span class="review-date">10.10.2024</span>
+                    </div>
+                    <div class="review-text">
+                        «Отличный магазин! Заказала улун, пришел свежий, аромат просто волшебный. Буду заказывать еще!»
+                    </div>
+                </div>
+                <div class="review-card">
+                    <div class="review-header">
+                        <strong>Дмитрий</strong>
+                        <span class="review-date">05.10.2024</span>
+                    </div>
+                    <div class="review-text">
+                        «Быстрая доставка, упаковка надежная. Чай соответствует описанию.»
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer class="site-footer">
+        <div class="footer-container">
+            <div class="footer-meta">
+                <p class="copyright">© 2026 Ароматный берег. Все права защищены.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+    
+
+
+    function submitReview(e) {
+        e.preventDefault();
+
+        const name = document.getElementById('revName').value.trim();
+        const rate = document.getElementById('revRate').value;
+        const text = document.getElementById('revText').value.trim();
+
+        if (!name || !text) {
+            alert('Пожалуйста, заполните имя и текст отзыва.');
+            return;
+        }
+
+        const date = new Date().toLocaleDateString('ru-RU');
+
+        // 1. Мгновенно добавляем отзыв на страницу (чтобы пользователь видел результат)
+        addReviewToPage(name, rate, text, date);
+        document.getElementById('reviewForm').reset();
+
+        // 2. Отправляем в Telegram
+        const message = `📬 <b>Новый отзыв на сайте!</b>\n\n` +
+                       `👤 <b>Имя:</b> \${name}\n` +
+                       `⭐ <b>Оценка:</b> \${rate}/5\n` +
+                       `📝 <b>Текст:</b>\n\${text}`;
+
+        sendTelegramMessage(message);
+    }
+
+    function sendTelegramMessage(text) {
+    // 1. Проверка токена (простая и надежная)
+    if (!TG_TOKEN || TG_TOKEN.includes('TOKEN') || TG_TOKEN.includes('ВСТАВЬ')) {
+        console.error('❌ КРИТИЧЕСКАЯ ОШИБКА: Токен не настроен!');
+        alert('Ошибка конфигурации: токен бота не найден. Смотри консоль (F12).');
+        return;
+    }
+
+    // 2. ФОРМИРОВАНИЕ ССЫЛКИ ЧЕРЕЗ ПЛЮС (Это решает проблему \$%7B...)
+    // Мы просто склеиваем строки: 'часть1' + переменная + 'часть2'
+    const url = 'https://api.telegram.org/bot' + TG_TOKEN + '/sendMessage';
+
+    fetch(url, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+            chat_id: TG_CHAT_ID,
+            text: text,
+            parse_mode: 'HTML'
+        })
+    })
+    .then(res => {
+        if (res.ok) {
+            console.log('✅ Успех! Отзыв отправлен в Telegram.');
+            alert('Отзыв успешно отправлен!');
+            // Здесь можно добавить сброс формы
+        } else {
+            console.error('❌ Ошибка API Telegram:', res.status);
+            alert('Ошибка отправки в Telegram. Код ошибки: ' + res.status);
+        }
+    })
+    .catch(err => {
+        console.error('❌ Ошибка сети (таймаут):', err);
+        alert('Ошибка сети. Отзыв сохранен на сайте, но не ушел в Telegram. Проверьте токен и ID чата.');
+    });
+}
+
+
+
+    function addReviewToPage(name, rate, text, date) {
+        const list = document.getElementById('reviewsList');
+        const card = document.createElement('div');
+        card.className = 'review-card';
+        // ВАЖНО: Используем обратные кавычки (``) для подстановки переменных \${name}
+        card.innerHTML = `
+            <div class="review-header">
+                <strong>\${name}</strong>
+                <span class="review-date">\${date}</span>
+            </div>
+            <div style="color: #2c4f3d; margin-bottom: 5px;">★ \${rate}/5</div>
+            <div class="review-text">«\${text}»</div>
+        `;
+        list.prepend(card);
+    }
+</script>
+
+
+</body>
+
+</html>

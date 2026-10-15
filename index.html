@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Bitcount+Grid+Double+Ink:wght@100..900&family=Lobster&family=Roboto:ital@0;1&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="styles/main.css">
+</head>
+
+<body>
+    <div class="image-with-text">
+        <img src="img/fon(3).jpg" class="full-width-cover" alt="Описание картинки">
+        <div class="text-overlay">
+            <h2>Ароматный берег</h2>
+        </div>
+    </div>
+
+    <div class="features">
+        <div class="container">
+            <div class="title">
+                <h1>Добро пожаловать в мир китайского чая Ароматный берег</h1>
+            </div>
+            <div class="cards">
+                <div class="item" onclick="openFeedbackModal('Шу пуэр')">
+                    <img src="img/shupuer.jpg" alt="card">
+                    <h3>Шу пуэр</h3>
+                    <p>Описание</p>
+                </div>
+                <div class="item" onclick="openFeedbackModal('Молочный Улун')">
+                    <img src="img/ulun.jpg" alt="card">
+                    <h3>Молочный Улун («Зеленый чай»)</h3>
+                    <p>Описание</p>
+                </div>
+                <div class="item" onclick="openFeedbackModal('Би Ло Чунь')">
+                    <img src="img/bilochun.webp" alt="card">
+                    <h3>Би Ло Чунь («Изумрудные спирали весны»)</h3>
+                    <p>Описание</p>
+                </div>
+                <div class="item" onclick="openFeedbackModal('Си Ху Лун Цзин')">
+                    <img src="img/cihuluntzin.jpg" alt="card">
+                    <h3>Си Ху Лун Цзин («Колодец дракона»)</h3>
+                    <p>Описание</p>
+                </div>
+                <div class="item" onclick="openFeedbackModal('Да Хун Пао')">
+                    <img src="img/dahunpao.webp" alt="card">
+                    <h3>Да Хун Пао</h3>
+                    <p>Описание</p>
+                </div>
+                <div class="item" onclick="openFeedbackModal('Дянь Хун')">
+                    <img src="img/dyanhun.jpg" alt="card">
+                    <h3>Дянь Хун</h3>
+                    <p>Описание</p>
+                </div>
+                <div class="item" onclick="openFeedbackModal('Габа Алишань')">
+                    <img src="img/gabaalishan.jpg" alt="card">
+                    <h3>Габа Алишань</h3>
+                    <p>Описание</p>
+                </div>
+                <div class="item" onclick="openFeedbackModal('Те Гуань Инь')">
+                    <img src="img/teguanin.jpg" alt="card">
+                    <h3>Те Гуань Инь</h3>
+                    <p>Описание</p>
+                </div>
+            </div>
+
+            <!-- Модальное окно -->
+            <div id="feedback-modal" class="modal" style="display: none;">
+                <div class="modal-content">
+                    <span class="close-btn" onclick="closeFeedbackModal()">&times;</span>
+                    <h2>Заказать консультацию</h2>
+                    <p>Вы выбрали: <strong id="selected-tea"></strong></p>
+
+                    <form id="feedback-form" onsubmit="submitFeedback(event)">
+                        <input type="text" id="name" placeholder="Ваше имя" required>
+                        <input type="tel" id="phone" placeholder="Телефон" required>
+                        <button type="submit">Отправить</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <footer class="site-footer">
+        <div class="footer-container">
+            <!-- CTA -->
+            <div class="footer-cta">
+                <h3>Готовы подобрать идеальный чай?</h3>
+                <button class="btn-primary" onclick="openFeedbackModal('Любой чай')">Подобрать чай</button>
+            </div>
+
+            <!-- Контакты -->
+            <div class="footer-contacts">
+                <div class="contact-item">
+                    <strong>Телефон:</strong><br>
+                    <a href="tel:+79021603748">+7 (9021603748)</a>
+                </div>
+                <div class="contact-item">
+                    <strong>Email:</strong><br>
+                    <a href="mailto:dbbzh87@mail.ru">dbbzh87@mail.ru</a>
+                </div>
+                <div class="contact-item">
+                    <strong>Адрес:</strong><br>
+                    г. Улан-Удэ, ул. Чайная, д. 1
+                </div>
+            </div>
+
+            <!-- Навигация -->
+            <nav class="footer-nav">
+                <h4>Онлайн магазин</h4>
+                <ul>
+                    <li><a href="/about.html">О чае</a></li>
+                    <li><a href="/delivery.html">Доставка и оплата</a></li>
+                    <li><a href="/reviews.html">Книга отзывов</a></li>
+                </ul>
+            </nav>
+
+            <!-- Соцсети и копирайт -->
+            <div class="footer-meta">
+                <div class="social-links">
+                    <a href="#" aria-label="Telegram">TG</a>
+                    <a href="#" aria-label="VK">VK</a>
+                    <a href="#" aria-label="YouTube">YT</a>
+                </div>
+                <p class="copyright">© 2026 Ароматный берег. Все права защищены.</p>
+                <p><a href="/privacy.html">Политика конфиденциальности</a></p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="JS/feedback.js"></script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+</body>
+
+</html>
